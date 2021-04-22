@@ -1,0 +1,145 @@
+version: v0.5.3-alpha.1
+
+dsn: mysql://root:secret@tcp(mysqld:3306)/kratos?max_conns=20&max_idle_conns=4
+
+serve:
+  public:
+    base_url: http://127.0.0.1:4433/
+    cors:
+      enabled: true
+#      allow_credentials: true
+      allowed_headers:
+        - Authorization
+        - Cookie
+      allowed_origins:
+        - http://127.0.0.1:3000
+      allowed_methods:
+        - POST
+        - GET
+        - PATCH
+        - PUT
+        - OPTIONS
+        - DELETE
+  admin:
+    base_url: http://kratos:4434/
+
+selfservice:
+  default_browser_return_url: http://127.0.0.1:3000/
+  whitelisted_return_urls:
+    - http://127.0.0.1:4455
+    - http://127.0.0.1:3000
+
+  methods:
+    password:
+      enabled: true
+    oidc:
+      enabled: false
+      config:
+        providers:
+          - id: ldap
+            provider: generic
+            mapper_url: file:///etc/config/kratos/oidc.ldap.jsonnet
+            client_id: test-client
+            client_secret: test-secret
+            issuer_url: http://hydra:4444/
+            auth_url: http://127.0.0.1:4444/oauth2/auth
+            token_url: http://127.0.0.1:4444/oauth2/token
+            scope:
+              - email
+            requested_claims:
+              userinfo:
+                email:
+                  essential: true
+              id_token:
+                auth_time:
+                  essential: true
+          - id: dingtalk
+            provider: generic
+            mapper_url: file:///etc/config/kratos/oidc.dingtalk.jsonnet
+            client_id: test-client
+            client_secret: test-secret
+            issuer_url: http://hydra-dingtalk:5444/
+            auth_url: http://127.0.0.1:5444/oauth2/auth
+            token_url: http://127.0.0.1:5444/oauth2/token
+            scope:
+              - email
+            requested_claims:
+              userinfo:
+                email:
+                  essential: true
+              id_token:
+                auth_time:
+                  essential: true
+
+  flows:
+    error:
+      ui_url: http://127.0.0.1:3000/error
+
+    settings:
+      ui_url: http://127.0.0.1:4455/settings
+      privileged_session_max_age: 15m
+
+    recovery:
+      enabled: true
+      ui_url: http://127.0.0.1:4455/recovery
+      lifespan: 1h
+
+    verification:
+      enabled: false
+      ui_url: http://127.0.0.1:4455/verify
+      after:
+        default_browser_return_url: http://127.0.0.1:4455/
+
+    logout:
+      after:
+        default_browser_return_url: http://127.0.0.1:3000/auth/login
+
+    login:
+      ui_url: http://127.0.0.1:3000/auth/login
+      lifespan: 10m
+
+    registration:
+      lifespan: 10m
+      ui_url: http://127.0.0.1:4455/auth/registration
+      after:
+        password:
+          hooks:
+            -
+              hook: session
+        oidc:
+          hooks:
+            - hook: session
+
+log:
+  level: trace
+  format: text
+  leak_sensitive_values: true
+
+secrets:
+  cookie:
+    - PLEASE-CHANGE-ME-I-AM-VERY-INSECURE
+
+hashers:
+  argon2:
+    parallelism: 1
+    memory: 131072
+    iterations: 2
+    salt_length: 16
+    key_length: 16
+
+identity:
+  default_schema_url: file:///etc/config/kratos/identity.schema.json
+
+  schemas:
+    - id: user
+      url: file:///etc/config/kratos/identity.schema.json
+    - id: administrator
+      url: file:///etc/config/kratos/administrator.schema.json
+
+courier:
+  smtp:
+    connection_uri: smtp://mailhog:1025
+
+session:
+  cookie:
+    same_site: Lax

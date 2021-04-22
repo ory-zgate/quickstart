@@ -1,0 +1,97 @@
+version: '3.7'
+
+services:
+  mysqld:
+    image: mysql:5.7
+    ports:
+      - "33306:3306"
+    command: --init-file /data/application/init.sql
+    environment:
+      - MYSQL_ROOT_PASSWORD=secret
+    volumes:
+      - ./contrib/mysql-init/init.sql:/data/application/init.sql
+    networks:
+      - intranet
+
+  kratos-migrate:
+    image: oryd/kratos:v0.5.5-alpha.1
+    environment:
+      - DSN=mysql://root:secret@tcp(mysqld:3306)/kratos
+    volumes:
+      -
+        type: bind
+        source: ./contrib/kratos
+        target: /etc/config/kratos
+    command:
+      -c /etc/config/kratos/kratos.yml migrate sql -e --yes
+    restart: on-failure
+    networks:
+      - intranet
+    depends_on:
+      - mysqld
+
+  kratos:
+    depends_on:
+      - kratos-migrate
+    image: oryd/kratos:v0.5.5-alpha.1
+    ports:
+      - "4433:4433" # public
+      - "4434:4434" # admin
+    restart: unless-stopped
+    environment:
+      - LOG_LEVEL=trace
+    command:
+      serve -c /etc/config/kratos/kratos.yml --dev
+    volumes:
+      -
+        type: bind
+        source: ./contrib/kratos
+        target: /etc/config/kratos
+    networks:
+      - intranet
+
+  mailhog:
+    image: mailhog/mailhog:v1.0.1
+    ports:
+      - '8025:8025'
+      - '1025:1025'
+    networks:
+      - intranet
+
+  user-admin-api:
+    image: zgate/user-admin-api:7aeaec2
+    depends_on: 
+      - mysqld
+    ports:
+      - "8091:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - SERVER_PORT=80
+      - KRATOS_PUBLIC_URL=http://kratos:4433
+      - KRATOS_ADMIN_URL=http://kratos:4434
+      - DB_USERNAME=root
+      - DB_PORT=3306
+      - DB_PASSWORD=secret
+      - DB_NAME=kratos
+      - DB_HOST=mysqld
+    networks:
+      - intranet
+    restart: on-failure
+
+  login-ui:
+    image: zgate/login-ui:d9a7de6
+    ports:
+      - "3000:80"
+    environment:
+      - KRATOS_BROWSER_URL=http://127.0.0.1:4433
+      - KRATOS_PUBLIC_URL=http://127.0.0.1:4433
+      - KRATOS_ADMIN_URL=http://127.0.0.1:4434
+    networks:
+      - intranet
+    restart: on-failure
+  
+
+
+
+networks:
+  intranet:
