@@ -79,7 +79,7 @@ services:
     restart: on-failure
 
   login-ui:
-    image: zgate/login-ui:d9a7de6
+    image: zgate/login-ui:latest
     ports:
       - "3000:80"
     environment:
