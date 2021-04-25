@@ -1,4 +1,5 @@
 action=$1
+profile=$2
 
 if [ -z "$action" ]
 then
@@ -6,7 +7,20 @@ then
   action="stat"
 fi
 
+if [ -z "$profile" ]
+then
+  echo "profile not set, default to all"
+  profile="all"
+fi
+
 compose="-f docker-compose.yml"
+case $profile in
+  "all")
+    compose="-f docker-compose.yml -f docker-compose-ui.yml"
+  ;;
+  "backend")
+    compose="-f docker-compose.yml"
+esac
 
 case $action in
   "stat")
@@ -22,6 +36,8 @@ case $action in
     docker-compose $compose down --remove-orphans
   ;;
   "usage")
-    echo "usage: ./run.sh action"
+    echo "usage: ./run.sh action profile"
+    echo "action can be list of [stat, log, start, stop]"
+    echo "profile can be list of [all, backend]"
   ;;
 esac

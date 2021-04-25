@@ -59,7 +59,7 @@ services:
       - intranet
 
   user-admin-api:
-    image: zgate/user-admin-api:7aeaec2
+    image: zgate/user-admin-api:fba24a1
     depends_on: 
       - mysqld
     ports:
@@ -78,17 +78,17 @@ services:
       - intranet
     restart: on-failure
 
-  login-ui:
-    image: zgate/login-ui:latest
-    ports:
-      - "3000:80"
-    environment:
-      - KRATOS_BROWSER_URL=http://127.0.0.1:4433
-      - KRATOS_PUBLIC_URL=http://127.0.0.1:4433
-      - KRATOS_ADMIN_URL=http://127.0.0.1:4434
-    networks:
-      - intranet
-    restart: on-failure
+  # login-ui:
+  #   image: zgate/login-ui:latest
+  #   ports:
+  #     - "3000:80"
+  #   environment:
+  #     - KRATOS_BROWSER_URL=http://127.0.0.1:4433
+  #     - KRATOS_PUBLIC_URL=http://127.0.0.1:4433
+  #     - KRATOS_ADMIN_URL=http://127.0.0.1:4434
+  #   networks:
+  #     - intranet
+  #   restart: on-failure
   
 
 

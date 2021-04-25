@@ -75,7 +75,7 @@ selfservice:
       ui_url: http://127.0.0.1:3000/error
 
     settings:
-      ui_url: http://127.0.0.1:3000/settings
+      ui_url: http://127.0.0.1:3000/auth/settings
       privileged_session_max_age: 15m
 
     recovery:

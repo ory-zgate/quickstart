@@ -1,6 +1,7 @@
 # init variables
 
 username=testuser
+displayName=TestUser01
 password=123456
 
 
@@ -11,7 +12,8 @@ create_user_result=`curl -s -X POST -H "Content-Type: application/json" http://1
 {
   "schema_id": "default",
   "traits": {
-    "username": "$username"
+    "username": "$username",
+    "displayName": "$displayName"
   }
 }
 EOT`
