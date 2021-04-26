@@ -59,7 +59,7 @@ services:
       - intranet
 
   user-admin-api:
-    image: zgate/user-admin-api:fba24a1
+    image: zgate/user-admin-api:ec0247d
     depends_on: 
       - mysqld
     ports:
