@@ -78,19 +78,6 @@ services:
       - intranet
     restart: on-failure
 
-  # login-ui:
-  #   image: zgate/login-ui:latest
-  #   ports:
-  #     - "3000:80"
-  #   environment:
-  #     - KRATOS_BROWSER_URL=http://127.0.0.1:4433
-  #     - KRATOS_PUBLIC_URL=http://127.0.0.1:4433
-  #     - KRATOS_ADMIN_URL=http://127.0.0.1:4434
-  #   networks:
-  #     - intranet
-  #   restart: on-failure
-  
-
 
 
 networks:
