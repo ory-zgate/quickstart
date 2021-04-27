@@ -72,6 +72,15 @@ authenticators:
 authorizers:
   allow:
     enabled: true
+  
+  remote:
+    enabled: true
+    config:
+      remote: http://user-admin-api:8080/access/check
+      headers:
+        X-Subject: '{{ print .Subject }}'
+        X-Url: '{{ print .MatchContext.URL }}'
+        # X-Method: '{{ print .MatchContext.Method }}'
 
 mutators:
   noop:
