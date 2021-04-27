@@ -1,0 +1,29 @@
+version: '3.7'
+
+services:
+  gateway:
+    image: oryd/oathkeeper:v0.38.9-beta.1
+    ports:
+      - "4455:4455"
+      - "4456:4456"
+    restart: on-failure
+    environment:
+      - LOG_LEVEL=debug
+    command:
+      serve proxy -c "/etc/config/oathkeeper/oathkeeper.yml"
+    volumes:
+      -
+        type: bind
+        source: ./contrib/gateway
+        target: /etc/config/oathkeeper
+    networks:
+      - intranet
+  
+  kratos:
+    environment: 
+      - SERVE_PUBLIC_BASE_URL=http://127.0.0.1:4455/kratos/public/
+
+  login-ui:
+    environment: 
+      - KRATOS_BROWSER_URL=http://127.0.0.1:4455/kratos/public/
+      - KRATOS_PUBLIC_URL=http://127.0.0.1:4455/kratos/public/

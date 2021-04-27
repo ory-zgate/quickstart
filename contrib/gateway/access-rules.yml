@@ -1,0 +1,60 @@
+-
+  id: "ory:kratos:public"
+  upstream:
+    preserve_host: true
+    url: "http://kratos:4433"
+    strip_path: /kratos/public
+  match:
+    url: "http://127.0.0.1:4455/kratos/public/<**>"
+    methods:
+      - GET
+      - POST
+      - PUT
+      - DELETE
+      - PATCH
+  authenticators:
+    -
+      handler: noop
+  authorizer:
+    handler: allow
+  mutators:
+    - handler: noop
+
+-
+  id: "ory:kratos-ui:anonymous"
+  upstream:
+    preserve_host: true
+    url: "http://login-ui:80"
+  match:
+    url: "http://127.0.0.1:4455/<{error,recovery,verify,auth/*,**.css,**.js,login/*}{/,}>"
+    methods:
+      - GET
+  authenticators:
+    -
+      handler: anonymous
+  authorizer:
+    handler: allow
+  mutators:
+    -
+      handler: noop
+
+-
+  id: "ory:kratos-ui:protected"
+  upstream:
+    preserve_host: true
+    url: "http://login-ui:80"
+  match:
+    url: "http://127.0.0.1:4455/<{,debug,dashboard,auth/settings, auth/logout}>"
+    methods:
+      - GET
+  authenticators:
+    -
+      handler: cookie_session
+  authorizer:
+    handler: allow
+  mutators:
+    - handler: id_token
+  errors:
+    - handler: redirect
+      config:
+        to: http://127.0.0.1:4455/auth/login
