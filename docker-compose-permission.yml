@@ -1,0 +1,42 @@
+version: '3.7'
+
+services:
+
+  # keto-migrate:
+  #   image: oryd/keto:v0.6.0-alpha.1
+  #   environment:
+  #     - LOG_LEVEL=debug
+  #     - DSN=mysql://root:secret@tcp(mysqld:3306)/keto
+  #   command:
+  #     migrate sql mysql://root:secret@tcp(mysqld:3306)/keto
+  #   restart: on-failure
+  #   volumes:
+  #     -
+  #       type: bind
+  #       source: ./contrib/permission
+  #       target: /etc/config/keto
+  #   networks: 
+  #     - intranet
+  #   depends_on: 
+  #     - mysqld
+
+  keto:
+    image: oryd/keto:v0.6.0-alpha.1-sqlite
+    # ports: 
+    #   - "4466:4466"
+    #   - "4467:4467"
+    # depends_on:
+      # - keto-migrate
+    command: 
+      serve -c /etc/config/keto/keto.yml
+    environment:
+      # - DSN=mysql://root:secret@tcp(mysqld:3306)/keto
+      - LOG_LEVEL=debug
+    volumes:
+      -
+        type: bind
+        source: ./contrib/permission
+        target: /etc/config/keto
+    restart: on-failure
+    networks: 
+      - intranet

@@ -1,0 +1,19 @@
+version: v0.6.0-alpha.1
+
+log:
+  level: debug
+
+namespaces:
+  - id: 0
+    name: identity
+
+# dsn: mysql://root:secret@tcp(mysqld:3306)/keto
+dsn: memory
+
+serve:
+  read:
+    host: 0.0.0.0
+    port: 4466
+  write:
+    host: 0.0.0.0
+    port: 4467

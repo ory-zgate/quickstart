@@ -16,7 +16,7 @@ fi
 compose="-f docker-compose.yml"
 case $profile in
   "all")
-    compose="-f docker-compose.yml -f docker-compose-ui.yml -f docker-compose-gateway.yml"
+    compose="-f docker-compose.yml -f docker-compose-ui.yml -f docker-compose-gateway.yml -f docker-compose-permission.yml"
   ;;
   "backend")
     compose="-f docker-compose.yml"
