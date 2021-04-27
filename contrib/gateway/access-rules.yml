@@ -26,7 +26,7 @@
     preserve_host: true
     url: "http://login-ui:80"
   match:
-    url: "http://127.0.0.1:4455/<{error,recovery,verify,auth/*,**.css,**.js,login/*}{/,}>"
+    url: "http://127.0.0.1:4455/<{error,recovery,verify,auth/login,**.css,**.js,login/*}{/,}>"
     methods:
       - GET
   authenticators:
@@ -44,7 +44,7 @@
     preserve_host: true
     url: "http://login-ui:80"
   match:
-    url: "http://127.0.0.1:4455/<{,debug,dashboard,auth/settings, auth/logout}>"
+    url: "http://127.0.0.1:4455/<{,debug,dashboard,auth/settings,auth/logout}>"
     methods:
       - GET
   authenticators:
