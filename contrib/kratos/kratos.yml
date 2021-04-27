@@ -13,6 +13,7 @@ serve:
         - Cookie
       allowed_origins:
         - http://127.0.0.1:3000
+        - http://127.0.0.1:9528
       allowed_methods:
         - POST
         - GET
@@ -27,6 +28,7 @@ selfservice:
   default_browser_return_url: http://127.0.0.1:3000/
   whitelisted_return_urls:
     - http://127.0.0.1:3000
+    - http://127.0.0.1:9528
 
   methods:
     password:
