@@ -22,9 +22,9 @@ services:
 
   keto:
     image: oryd/keto:v0.6.0-alpha.1-sqlite
-    # ports: 
-    #   - "4466:4466"
-    #   - "4467:4467"
+    ports: 
+      - '4466'
+      - '4467'
     # depends_on:
       # - keto-migrate
     command: 

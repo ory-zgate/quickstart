@@ -77,7 +77,7 @@
     -
       handler: cookie_session
   authorizer:
-    handler: remote
+    handler: remote_json
   mutators:
     - handler: id_token
   errors:
