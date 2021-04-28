@@ -58,8 +58,8 @@ services:
     networks:
       - intranet
 
-  user-admin-api:
-    image: registry.hub.docker.com/zgate/admin-api:1.0
+  admin-api:
+    image: zgate/admin-api:27acc1f
     depends_on: 
       - mysqld
     ports:

@@ -63,7 +63,7 @@
   id: "ory:admin-api:protected"
   upstream:
     preserve_host: true
-    url: "http://user-admin-api:8080"
+    url: "http://admin-api:8080"
     strip_path: /api
   match:
     url: "http://127.0.0.1:4455/api/<identity>/<**>"

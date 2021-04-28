@@ -76,7 +76,7 @@ authorizers:
   remote_json:
     enabled: true
     config:
-      remote: http://user-admin-api:8080/access/check
+      remote: http://admin-api:8080/access/check
       payload: |
         {
           "namespace": "{{ printIndex .MatchContext.RegexpCaptureGroups 0 }}",
