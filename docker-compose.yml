@@ -59,7 +59,7 @@ services:
       - intranet
 
   user-admin-api:
-    image: registry.hub.docker.com/zgate/user-admin-api:1.0
+    image: registry.hub.docker.com/zgate/admin-api:1.0
     depends_on: 
       - mysqld
     ports:
@@ -69,6 +69,7 @@ services:
       - SERVER_PORT=80
       - KRATOS_PUBLIC_URL=http://kratos:4433
       - KRATOS_ADMIN_URL=http://kratos:4434
+      - KETO_READ_URL=http://keto:4466
       - DB_USERNAME=root
       - DB_PORT=3306
       - DB_PASSWORD=secret

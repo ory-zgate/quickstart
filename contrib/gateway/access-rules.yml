@@ -66,7 +66,7 @@
     url: "http://user-admin-api:8080"
     strip_path: /api
   match:
-    url: "http://127.0.0.1:4455/api/identity/<**>"
+    url: "http://127.0.0.1:4455/api/<identity>/<**>"
     methods:
       - GET
       - POST

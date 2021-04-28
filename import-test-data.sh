@@ -22,6 +22,12 @@ EOT`
 
 user_id=`jq -r '.id' <<< $create_user_result`
 
+if [ -z "$user_id" ]
+then
+  echo "create failed, please retry later"
+  exit 1
+fi
+
 # set password
 
 set_password_result=`curl -s -X PUT -H "Content-Type: application/json" http://127.0.0.1:$port/identity/$user_id/password \
