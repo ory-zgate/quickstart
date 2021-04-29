@@ -1,5 +1,6 @@
 action=$1
 profile=$2
+container=$3
 
 if [ -z "$action" ]
 then
@@ -35,9 +36,12 @@ case $action in
   "stop")
     docker-compose $compose down --remove-orphans
   ;;
+  "restart-one")
+    docker-compose $compose stop $container && docker-compose $compose start $container
+  ;;
   "usage")
     echo "usage: ./run.sh action profile"
-    echo "action can be list of [stat, log, start, stop]"
+    echo "action can be list of [stat, log, start, stop, restart-one]"
     echo "profile can be list of [all, backend]"
   ;;
 esac
