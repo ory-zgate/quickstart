@@ -21,9 +21,9 @@ services:
   
   kratos:
     environment: 
-      - SERVE_PUBLIC_BASE_URL=http://127.0.0.1:4455/kratos/public/
+      - SERVE_PUBLIC_BASE_URL=http://127.0.0.1:4455/kratos/public
 
   login-ui:
     environment: 
-      - KRATOS_BROWSER_URL=http://127.0.0.1:4455/kratos/public/
-      - KRATOS_PUBLIC_URL=http://127.0.0.1:4455/kratos/public/
+      - KRATOS_BROWSER_URL=http://127.0.0.1:4455/kratos/public
+      - KRATOS_PUBLIC_URL=http://127.0.0.1:4455/kratos/public

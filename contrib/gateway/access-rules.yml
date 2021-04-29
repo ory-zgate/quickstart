@@ -5,7 +5,7 @@
     url: "http://kratos:4433"
     strip_path: /kratos/public
   match:
-    url: "http://127.0.0.1:4455/kratos/public/<**>"
+    url: "http://127.0.0.1:4455/kratos/public/<.*>"
     methods:
       - GET
       - POST
@@ -21,12 +21,12 @@
     - handler: noop
 
 -
-  id: "ory:kratos-ui:anonymous"
+  id: "ory:login-ui:anonymous"
   upstream:
     preserve_host: true
     url: "http://login-ui:80"
   match:
-    url: "http://127.0.0.1:4455/<{error,recovery,verify,auth/login,**.css,**.js,login/*}{/,}>"
+    url: "http://127.0.0.1:4455/<auth/login>"
     methods:
       - GET
   authenticators:
@@ -39,12 +39,30 @@
       handler: noop
 
 -
-  id: "ory:kratos-ui:protected"
+  id: "ory:login-ui-static:anonymous"
   upstream:
     preserve_host: true
     url: "http://login-ui:80"
   match:
-    url: "http://127.0.0.1:4455/<{,debug,dashboard,auth/settings,auth/logout}>"
+    url: "http://127.0.0.1:4455/<.*.css|.*.js>"
+    methods:
+      - GET
+  authenticators:
+    -
+      handler: anonymous
+  authorizer:
+    handler: allow
+  mutators:
+    -
+      handler: noop
+
+-
+  id: "ory:login-ui:protected"
+  upstream:
+    preserve_host: true
+    url: "http://login-ui:80"
+  match:
+    url: "http://127.0.0.1:4455/<[auth\\/settings|auth\\/logout]>"
     methods:
       - GET
   authenticators:
@@ -66,7 +84,7 @@
     url: "http://admin-api:8080"
     strip_path: /api
   match:
-    url: "http://127.0.0.1:4455/api/<identity>/<**>"
+    url: "http://127.0.0.1:4455/api/<identity>/<.*>"
     methods:
       - GET
       - POST
@@ -84,3 +102,43 @@
     - handler: redirect
       config:
         to: http://127.0.0.1:4455/auth/login
+
+-
+  id: "ory:access-api-write:anonymous"
+  upstream:
+    preserve_host: true
+    url: "http://keto:4467"
+    strip_path: /api/access
+  match:
+    url: "http://127.0.0.1:4455/api/access/<.*>"
+    methods:
+      - PUT
+      - DELETE
+  authenticators:
+    -
+      handler: anonymous
+  authorizer:
+    handler: allow
+  mutators:
+    -
+      handler: noop
+
+-
+  id: "ory:access-api-read:anonymous"
+  upstream:
+    preserve_host: true
+    url: "http://keto:4466"
+    strip_path: /api/access
+  match:
+    url: "http://127.0.0.1:4455/api/access/<.*>"
+    methods:
+      - GET
+  authenticators:
+    -
+      handler: anonymous
+  authorizer:
+    handler: allow
+  mutators:
+    -
+      handler: noop
+

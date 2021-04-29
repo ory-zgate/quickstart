@@ -46,7 +46,7 @@ errors:
         verbose: true
 
 access_rules:
-  matching_strategy: glob
+  matching_strategy: regexp
   repositories:
     - file:///etc/config/oathkeeper/access-rules.yml
 
@@ -81,7 +81,7 @@ authorizers:
         {
           "namespace": "{{ printIndex .MatchContext.RegexpCaptureGroups 0 }}",
           "subject": "{{ print .Subject }}",
-          "resource": "{{ print .MatchContext.URL }}"
+          "resource": "/{{ printIndex .MatchContext.RegexpCaptureGroups 0 }}/{{ printIndex .MatchContext.RegexpCaptureGroups 1 }}"
         }
 
 mutators:
