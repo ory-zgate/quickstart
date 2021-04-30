@@ -16,18 +16,18 @@ for row in $(echo "${id_list}" | jq -c '.[]'); do
       echo ${row} | jq -r '.id'
     }
 
-    _jq_schemaId() {
-      echo ${row} | jq -r '.schemaId'
+    _jq_roleType() {
+      echo ${row} | jq -r '.traits.roleType'
     }
 
     id=$(_jq)
-    schemaId=$(_jq_schemaId)
-    echo "$id $schemaId"
+    roleType=$(_jq_roleType)
+    # echo "$id $schemaId $roleType"
 
-    if [ $schemaId != 'administrator' ]; then
+    if [ $roleType != 'administrator' ]; then
       continue
     fi
-    echo "init permission for $id"
+    echo "init permission for $id as role $roleType"
 
     add_create_permission_result=`curl -s -X PUT -H "Content-Type: application/json" http://127.0.0.1:4455/api/access/relation-tuples \
     --data-binary @- << EOT

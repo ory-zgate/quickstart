@@ -2,8 +2,10 @@
 
 username=testuser
 displayName=TestUser01
+role=manager
 password=123456
 adminname=admin
+adminrole=administrator
 port=8091
 
 
@@ -15,7 +17,8 @@ create_user_result=`curl -s -X POST -H "Content-Type: application/json" http://1
   "schemaId": "default",
   "traits": {
     "username": "$username",
-    "displayName": "$displayName"
+    "displayName": "$displayName",
+    "roleType": "$role"
   }
 }
 EOT`
@@ -45,7 +48,8 @@ create_admin_result=`curl -s -X POST -H "Content-Type: application/json" http://
   "schemaId": "administrator",
   "traits": {
     "username": "$adminname",
-    "displayName": "$adminname"
+    "displayName": "$adminname",
+    "roleType": "$adminrole"
   }
 }
 EOT`

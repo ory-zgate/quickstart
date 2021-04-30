@@ -21,6 +21,10 @@
         "displayName": {
           "type": "string",
           "title": "Display Name"
+        },
+        "roleType": {
+          "type": "string",
+          "title": "Role"
         }
       },
       "required": [

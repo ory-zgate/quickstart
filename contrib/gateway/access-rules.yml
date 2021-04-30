@@ -21,7 +21,7 @@
     - handler: noop
 
 -
-  id: "ory:login-ui:anonymous"
+  id: "login-ui:anonymous"
   upstream:
     preserve_host: true
     url: "http://login-ui:80"
@@ -39,7 +39,7 @@
       handler: noop
 
 -
-  id: "ory:login-ui-static:anonymous"
+  id: "ui-static:anonymous"
   upstream:
     preserve_host: true
     url: "http://login-ui:80"
@@ -57,7 +57,7 @@
       handler: noop
 
 -
-  id: "ory:login-ui:protected"
+  id: "login-ui:protected"
   upstream:
     preserve_host: true
     url: "http://login-ui:80"
@@ -78,7 +78,28 @@
         to: http://127.0.0.1:4455/auth/login
 
 -
-  id: "ory:admin-api:protected"
+  id: "admin-ui:protected"
+  upstream:
+    preserve_host: true
+    url: "http://admin-ui:80"
+  match:
+    url: "http://127.0.0.1:4455/admin"
+    methods:
+      - GET
+  authenticators:
+    -
+      handler: cookie_session
+  authorizer:
+    handler: allow
+  mutators:
+    - handler: id_token
+  errors:
+    - handler: redirect
+      config:
+        to: http://127.0.0.1:4455/auth/login
+
+-
+  id: "admin-api:protected"
   upstream:
     preserve_host: true
     url: "http://admin-api:8080"
@@ -104,7 +125,7 @@
         to: http://127.0.0.1:4455/auth/login
 
 -
-  id: "ory:access-api-write:anonymous"
+  id: "access-api-write:anonymous"
   upstream:
     preserve_host: true
     url: "http://keto:4467"
@@ -124,7 +145,7 @@
       handler: noop
 
 -
-  id: "ory:access-api-read:anonymous"
+  id: "access-api-read:anonymous"
   upstream:
     preserve_host: true
     url: "http://keto:4466"

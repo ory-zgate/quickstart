@@ -1,19 +1,23 @@
 log:
   level: debug
   format: json
+  leak_sensitive_values: true
 
 serve:
   proxy:
     cors:
       enabled: true
       allowed_origins:
-        - "*"
+        - http://127.0.0.1:3000
+        - http://127.0.0.1:3001
+        - http://127.0.0.1:9528
       allowed_methods:
         - POST
         - GET
         - PUT
         - PATCH
         - DELETE
+        - HEAD
       allowed_headers:
         - Authorization
         - Content-Type
