@@ -5,8 +5,10 @@
 git clone git clone git@github.com:ory-zgate/quickstart.git
 cd quickstart
 ./run.sh start
-./import-test-data.sh
+./init-test-data.sh
 ```
 
-visit http://127.0.0.1:3000
+登录 http://127.0.0.1:3000/auth/login
+
+后台管理 http://127.0.0.1:3001/admin
 
