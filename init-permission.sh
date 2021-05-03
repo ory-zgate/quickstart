@@ -61,4 +61,26 @@ for row in $(echo "${id_list}" | jq -c '.[]'); do
     }
     EOT`
     echo $add_create_permission_result
+
+    add_create_permission_result=`curl -s -X PUT -H "Content-Type: application/json" http://127.0.0.1:4455/inner/api/access/relation-tuples \
+    --data-binary @- << EOT
+    {
+      "namespace": "access",
+      "object": "/access/create",
+      "relation": "mock",
+      "subject": "administrator"
+    }
+    EOT`
+    echo $add_create_permission_result
+
+    add_create_permission_result=`curl -s -X PUT -H "Content-Type: application/json" http://127.0.0.1:4455/inner/api/access/relation-tuples \
+    --data-binary @- << EOT
+    {
+      "namespace": "access",
+      "object": "/access/delete",
+      "relation": "mock",
+      "subject": "administrator"
+    }
+    EOT`
+    echo $add_create_permission_result
 done

@@ -85,7 +85,7 @@ authorizers:
         {
           "namespace": "{{ printIndex .MatchContext.RegexpCaptureGroups 0 }}",
           "subject": "{{ print .Extra.identity.traits.roleType }}",
-          "resource": "/{{ printIndex .MatchContext.RegexpCaptureGroups 0 }}/{{ printIndex .MatchContext.RegexpCaptureGroups 1 }}"
+          "object": "/{{ printIndex .MatchContext.RegexpCaptureGroups 0 }}/{{ printIndex .MatchContext.RegexpCaptureGroups 1 }}"
         }
 
 mutators:
