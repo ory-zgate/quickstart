@@ -70,6 +70,7 @@ services:
       - KRATOS_PUBLIC_URL=http://kratos:4433
       - KRATOS_ADMIN_URL=http://kratos:4434
       - KETO_READ_URL=http://keto:4466
+      - KETO_WRITE_URL=http://keto:4467
       - DB_USERNAME=root
       - DB_PORT=3306
       - DB_PASSWORD=secret
