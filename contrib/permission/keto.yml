@@ -6,8 +6,10 @@ log:
 namespaces:
   - id: 0
     name: identity
+  - id: 1
+    name: access
 
-# dsn: mysql://root:secret@tcp(mysqld:3306)/keto
+    # dsn: mysql://root:secret@tcp(mysqld:3306)/keto
 dsn: memory
 
 serve:

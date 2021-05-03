@@ -126,7 +126,7 @@
     url: "http://admin-api:8080"
     strip_path: /api
   match:
-    url: "http://127.0.0.1:4455/api/<identity>/<.*>"
+    url: "http://127.0.0.1:4455/api/<.*>/<.*>"
     methods:
       - GET
       - POST
@@ -150,9 +150,9 @@
   upstream:
     preserve_host: true
     url: "http://keto:4467"
-    strip_path: /api/access
+    strip_path: /inner/api/access
   match:
-    url: "http://127.0.0.1:4455/api/access/<.*>"
+    url: "http://127.0.0.1:4455/inner/api/access/<.*>"
     methods:
       - PUT
       - DELETE
@@ -165,22 +165,22 @@
     -
       handler: noop
 
--
-  id: "access-api-read:anonymous"
-  upstream:
-    preserve_host: true
-    url: "http://keto:4466"
-    strip_path: /api/access
-  match:
-    url: "http://127.0.0.1:4455/api/access/<.*>"
-    methods:
-      - GET
-  authenticators:
-    -
-      handler: anonymous
-  authorizer:
-    handler: allow
-  mutators:
-    -
-      handler: noop
+# -
+#   id: "access-api-read:anonymous"
+#   upstream:
+#     preserve_host: true
+#     url: "http://keto:4466"
+#     strip_path: /api/access
+#   match:
+#     url: "http://127.0.0.1:4455/api/access/<.*>"
+#     methods:
+#       - GET
+#   authenticators:
+#     -
+#       handler: anonymous
+#   authorizer:
+#     handler: allow
+#   mutators:
+#     -
+#       handler: noop
 
