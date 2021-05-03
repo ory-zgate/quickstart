@@ -84,7 +84,7 @@ authorizers:
       payload: |
         {
           "namespace": "{{ printIndex .MatchContext.RegexpCaptureGroups 0 }}",
-          "subject": "{{ print .Subject }}",
+          "subject": "{{ print .Extra.identity.traits.roleType }}",
           "resource": "/{{ printIndex .MatchContext.RegexpCaptureGroups 0 }}/{{ printIndex .MatchContext.RegexpCaptureGroups 1 }}"
         }
 

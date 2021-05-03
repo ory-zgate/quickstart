@@ -35,7 +35,7 @@ for row in $(echo "${id_list}" | jq -c '.[]'); do
       "namespace": "identity",
       "object": "/identity",
       "relation": "mock",
-      "subject": "$id"
+      "subject": "administrator"
     }
     EOT`
     echo $add_create_permission_result
@@ -46,7 +46,7 @@ for row in $(echo "${id_list}" | jq -c '.[]'); do
       "namespace": "identity",
       "object": "/identity/filter",
       "relation": "mock",
-      "subject": "$id"
+      "subject": "administrator"
     }
     EOT`
     echo $add_create_permission_result
