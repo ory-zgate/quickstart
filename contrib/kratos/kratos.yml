@@ -1,4 +1,4 @@
-version: v0.5.3-alpha.1
+version: v0.6.0-alpha.1
 
 dsn: mysql://root:secret@tcp(mysqld:3306)/kratos?max_conns=20&max_idle_conns=4
 
@@ -27,7 +27,7 @@ serve:
     base_url: http://kratos:4434/
 
 selfservice:
-  default_browser_return_url: http://127.0.0.1:4455/
+  default_browser_return_url: http://127.0.0.1:3000/
   whitelisted_return_urls:
     - http://127.0.0.1:3000
     - http://127.0.0.1:3001
@@ -78,34 +78,34 @@ selfservice:
 
   flows:
     error:
-      ui_url: http://127.0.0.1:4455/error
+      ui_url: http://127.0.0.1:3000/error
 
     settings:
-      ui_url: http://127.0.0.1:4455/auth/settings
+      ui_url: http://127.0.0.1:3000/auth/settings
       privileged_session_max_age: 15m
 
     recovery:
       enabled: true
-      ui_url: http://127.0.0.1:4455/recovery
+      ui_url: http://127.0.0.1:3000/recovery
       lifespan: 1h
 
     verification:
       enabled: false
-      ui_url: http://127.0.0.1:4455/verify
+      ui_url: http://127.0.0.1:3000/verify
       after:
-        default_browser_return_url: http://127.0.0.1:4455/
+        default_browser_return_url: http://127.0.0.1:3000/
 
     logout:
       after:
-        default_browser_return_url: http://127.0.0.1:4455/auth/login
+        default_browser_return_url: http://127.0.0.1:3000/auth/login
 
     login:
-      ui_url: http://127.0.0.1:4455/auth/login
+      ui_url: http://127.0.0.1:3000/auth/login
       lifespan: 10m
 
     registration:
       lifespan: 10m
-      ui_url: http://127.0.0.1:4455/auth/registration
+      ui_url: http://127.0.0.1:3000/auth/registration
       after:
         password:
           hooks:
@@ -118,7 +118,7 @@ selfservice:
 log:
   level: trace
   format: text
-  leak_sensitive_values: true
+  leak_sensitive_values: false
 
 secrets:
   cookie:
@@ -127,7 +127,7 @@ secrets:
 hashers:
   argon2:
     parallelism: 1
-    memory: 131072
+    memory: 128MB
     iterations: 2
     salt_length: 16
     key_length: 16
