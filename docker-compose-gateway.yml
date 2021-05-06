@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   gateway:
-    image: oryd/oathkeeper:v0.38.9-beta.1
+    image: oryd/oathkeeper:v0.38.10-alpine
     ports:
       - "4455:4455"
       - "4456:4456"

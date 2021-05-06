@@ -59,7 +59,7 @@ services:
       - intranet
 
   admin-api:
-    image: zgate/admin-api:869ba3a
+    image: zgate/admin-api:3b5a355
     depends_on: 
       - mysqld
     ports:

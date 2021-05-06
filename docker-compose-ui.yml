@@ -12,7 +12,7 @@ services:
       - intranet
     restart: on-failure
   admin-ui:
-    image: zgate/admin-ui:latest
+    image: zgate/admin-ui:be4d50e
     ports:
       - "3001:80"
     environment:

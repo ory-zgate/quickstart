@@ -34,7 +34,7 @@ for row in $(echo "${id_list}" | jq -c '.[]'); do
     {
       "namespace": "identity",
       "object": "/identity",
-      "relation": "mock",
+      "relation": "POST",
       "subject": "administrator"
     }
     EOT`
@@ -45,7 +45,7 @@ for row in $(echo "${id_list}" | jq -c '.[]'); do
     {
       "namespace": "identity",
       "object": "/identity/filter",
-      "relation": "mock",
+      "relation": "POST",
       "subject": "administrator"
     }
     EOT`
@@ -56,7 +56,7 @@ for row in $(echo "${id_list}" | jq -c '.[]'); do
     {
       "namespace": "access",
       "object": "/access/query",
-      "relation": "mock",
+      "relation": "GET",
       "subject": "administrator"
     }
     EOT`
@@ -67,7 +67,7 @@ for row in $(echo "${id_list}" | jq -c '.[]'); do
     {
       "namespace": "access",
       "object": "/access/create",
-      "relation": "mock",
+      "relation": "POST",
       "subject": "administrator"
     }
     EOT`
@@ -78,7 +78,7 @@ for row in $(echo "${id_list}" | jq -c '.[]'); do
     {
       "namespace": "access",
       "object": "/access/delete",
-      "relation": "mock",
+      "relation": "DELETE",
       "subject": "administrator"
     }
     EOT`
